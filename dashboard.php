@@ -12,93 +12,80 @@ $instagram_posts = [
 ];
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        function searchContent() {
-            var input, filter, tweets, posts, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toLowerCase();
-            tweets = document.getElementsByClassName("tweet");
-            posts = document.getElementsByClassName("post");
-
-            for (i = 0; i < tweets.length; i++) {
-                txtValue = tweets[i].textContent || tweets[i].innerText;
-                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                    tweets[i].style.display = "";
-                } else {
-                    tweets[i].style.display = "none";
-                }
-            }
-
-            for (i = 0; i < posts.length; i++) {
-                txtValue = posts[i].textContent || posts[i].innerText;
-                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                    posts[i].style.display = "";
-                } else {
-                    posts[i].style.display = "none";
-                }
-            }
-        }
-
-        function filterContent() {
-            var dateFilter = document.getElementById("dateFilter").value;
-            var typeFilter = document.getElementById("typeFilter").value;
-            var tweets = document.getElementsByClassName("tweet");
-            var posts = document.getElementsByClassName("post");
-
-            for (var i = 0; i < tweets.length; i++) {
-                var tweetDate = new Date(tweets[i].getElementsByTagName("em")[0].innerText);
-                var tweetType = "twitter";
-                if ((dateFilter === "" || tweetDate >= new Date(dateFilter)) && (typeFilter === "" || typeFilter === tweetType)) {
-                    tweets[i].style.display = "";
-                } else {
-                    tweets[i].style.display = "none";
-                }
-            }
-
-            for (var i = 0; i < posts.length; i++) {
-                if (!posts[i].classList.contains("tweet")) {
-                    var postDate = new Date(posts[i].getElementsByTagName("em")[0].innerText);
-                    var postType = "instagram";
-                    if ((dateFilter === "" || postDate >= new Date(dateFilter)) && (typeFilter === "" || typeFilter === postType)) {
-                        posts[i].style.display = "";
+        // Fetch Facebook data after login
+        function fetchFacebookData() {
+            fetch('facebook_api.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.login_url) {
+                        document.getElementById('loginButton').innerHTML = `<a href="${data.login_url}">Log in with Facebook!</a>`;
+                    } else if (data.error) {
+                        document.getElementById('postsContainer').innerHTML = `<p>Error: ${data.error}</p>`;
                     } else {
-                        posts[i].style.display = "none";
+                        displayPosts(data); // Call function to display posts
                     }
-                }
-            }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('postsContainer').innerHTML = `<p>Error fetching data.</p>`;
+                });
         }
+
+        // Display the posts in the dashboard
+        function displayPosts(data) {
+            const postsContainer = document.getElementById('postsContainer');
+            postsContainer.innerHTML = `<h2>${data.name}'s Posts</h2><p>Email: ${data.email}</p>`;
+            
+            // Loop through posts and display each one
+            data.posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <p>${post.message || 'No content'}</p>
+                    <small>Posted on: ${new Date(post.created_time).toLocaleString()}</small>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        window.onload = function() {
+            fetchFacebookData();
+        };
     </script>
 </head>
+
 <body>
     <div class="dashboard-container">
         <div class="main-content">
-        <?php include ("includes/header.php");
-        include("includes/sidebar.php")?>
+            <?php include("includes/header.php");
+            include("includes/sidebar.php") ?>
             <main>
                 <section>
                     <h2>Dashboard Overview</h2>
                     <p>Here you can manage your posts and view analytics.</p>
                     <div class="search-input">
-                    <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="Search posts...">
-                </div>
-                <div class="filters">
-                    <label for="dateFilter">Date:</label>
-                    <input type="date" id="dateFilter" onchange="filterContent()">
-                    <label for="typeFilter">Type:</label>
-                    <select id="typeFilter" onchange="filterContent()">
-                        <option value="">All</option>
-                        <option value="twitter">Twitter</option>
-                        <option value="instagram">Instagram</option>
-                    </select>
-                </div>
+                        <input type="text" id="searchInput" onkeyup="searchContent()" placeholder="Search posts...">
+                    </div>
+                    <div class="filters">
+                        <label for="dateFilter">Date:</label>
+                        <input type="date" id="dateFilter" onchange="filterContent()">
+                        <label for="typeFilter">Type:</label>
+                        <select id="typeFilter" onchange="filterContent()">
+                            <option value="">All</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="instagram">Instagram</option>
+                        </select>
+                    </div>
 
                     <h2>Notifications</h2>
                     <div class="notifications">
@@ -106,7 +93,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <ul>
                                 <?php foreach ($notifications as $notification): ?>
                                     <li class="notification">
-                                        <?php echo htmlspecialchars($notification['message']); ?> 
+                                        <?php echo htmlspecialchars($notification['message']); ?>
                                         <em>- <?php echo $notification['created_at']; ?></em>
                                     </li>
                                 <?php endforeach; ?>
@@ -130,11 +117,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <?php endif; ?>
                     </div>
 
+                    <!-- FACEBOOK POSTS -->
+                    <h2>Facebook</h2>
+                    <div class="posts-row instagram-posts">
+                        <div id="loginButton"></div>
+                        <div id="postsContainer"></div>
+                    </div>
+                    <!-- FACEBOOK POSTS -->
+
                     <h2>Instagram Posts</h2>
                     <div class="posts-row instagram-posts">
                         <?php foreach ($instagram_posts as $url): ?>
                             <div class="post">
-                                <blockquote class="instagram-media" data-instgrm-permalink="<?php echo $url; ?>" data-instgrm-version="13">
+                                <blockquote class="instagram-media" data-instgrm-permalink="<?php echo $url; ?>"
+                                    data-instgrm-version="13">
                                     <a href="<?php echo $url; ?>" target="_blank"></a>
                                 </blockquote>
                             </div>
@@ -146,4 +142,5 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 </body>
+
 </html>
