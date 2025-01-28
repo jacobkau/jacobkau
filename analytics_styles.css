@@ -1,0 +1,35 @@
+
+
+
+
+/* Notifications Section */
+.notifications {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.notifications h2 {
+    color: #007bff;
+}
+
+.notifications ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notifications ul li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notifications ul li em {
+    display: block;
+    color: #888;
+    font-size: 0.9em;
+}

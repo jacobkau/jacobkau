@@ -1,0 +1,265 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e1e8ed;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: teal;
+    color: white;
+    height: 100vh;
+    box-sizing: border-box;
+    position:fixed;
+    top: 57px;
+    left: 0;
+}
+
+.main-content li {
+    list-style: none;
+    padding: 0;
+}
+
+.main-content li a {
+    color: #f5f5f5;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 50px;
+}
+
+.sidebar h2 {
+    color: #fff;
+    margin-left: 25px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 0px;    
+    
+}
+
+.sidebar nav ul li a {
+    color: #adb5bd;
+    margin-left: 0px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding:15px;
+    display: block;
+    width: 100%; /* Ensure the link covers the full width of the sidebar */
+    box-sizing: border-box; /* Include padding in the element's width */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar nav ul li a.active {
+    background-color: #000000; /* Different background color to highlight active link */
+    color: #ffffff; /* Change text color for active link */
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #000000; /* Different background color on hover */
+    color: #ffffff; /* Change text color on hover */
+}
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-left: 230px;
+    border: 1px solid #e4e6e7;
+    max-width: 85%;
+    margin-top: 87px;
+    background-color: #fdfefe;
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #858d95;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0; /* Adjust padding */
+    border-bottom: 3px solid teal;
+    border-bottom: 3px solid teal;
+    z-index: 1;
+
+}
+header h3 {
+    color: white;
+    margin-left: 30px;
+}
+main {
+    padding: 5px 0;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select,
+input[type="date"]{
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #6d6c6c;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: #007bff;
+}
+
+/* Forms */
+form{
+    margin-top: 57px;
+}
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+form input[type="time"],
+form input[type="date"],
+form textarea,
+form select {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+form button {
+    width: 40%;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    border: 1px solid #a5a5a5;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+/* Notifications Section */
+.notifications {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.notifications h2 {
+    color: #007bff;
+}
+
+.notifications ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notifications ul li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notifications ul li em {
+    display: block;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* Flexbox Container for Posts */
+.posts-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Individual Post Styling */
+.post {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px); /* Adjust this value based on desired column count */
+}
+
+.post img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+canvas {
+    max-width: 90%;
+    margin-bottom: 20px;
+}
+
+.post p {
+    margin: 0;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .post {
+        width: calc(50% - 20px); /* Adjust for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .post {
+        width: 100%; /* Stack posts on very small screens */
+    }
+}
