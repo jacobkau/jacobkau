@@ -1,5 +1,4 @@
-## Hi there 👋
-
+ Just a passionate hobbyist, Music lover, and tech enthusiast, always learning new things and connecting with others who share my passions. I’m a friendly and approachable person who loves meeting new people. I tend to be the one who listens and offers support, but I also enjoy having deep, meaningful conversations.
 <!--
 **jacobkau/jacobkau** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
